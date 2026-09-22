@@ -1,4 +1,3 @@
-// === 1. COUNTDOWN TIMER ===
 // Imposta qui la data del matrimonio (Formato: YYYY-MM-DDTHH:MM:SS)
 const weddingDate = new Date("2027-06-20T11:00:00").getTime();
 
@@ -25,14 +24,22 @@ function updateCountdown() {
 setInterval(updateCountdown, 1000);
 updateCountdown();
 
-// === 2. COPIA IBAN IN APPUNTI ===
-function copyIBAN() {
-    const ibanText = document.getElementById("iban-text").innerText;
+// Funzione per copiare l'IBAN negli appunti
+function copyIban() {
+    const ibanText = document.getElementById('ibanText').innerText.trim();
+    const btnText = document.getElementById('copyBtnText');
+    const icon = document.getElementById('copyIcon');
+    const btn = document.getElementById('copyIbanBtn');
+
     navigator.clipboard.writeText(ibanText).then(() => {
-        const msg = document.getElementById("copy-msg");
-        msg.classList.remove("opacity-0");
+        btnText.innerText = 'Copiato!';
+        icon.className = 'fa-solid fa-check text-emerald-400';
+
         setTimeout(() => {
-            msg.classList.add("opacity-0");
+            btnText.innerText = 'Copia IBAN';
+            icon.className = 'fa-regular fa-copy';
         }, 2500);
+    }).catch(err => {
+        console.error('Errore durante la copia dell\'IBAN: ', err);
     });
 }
