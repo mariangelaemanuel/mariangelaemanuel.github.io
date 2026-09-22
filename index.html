@@ -118,18 +118,13 @@
             <h2 class="font-serif text-3xl md:text-4xl text-[#2c3e35] mb-2">Conferma la tua Presenza</h2>
             <p class="text-gray-500 text-sm mb-8">Ti preghiamo di confermare la tua presenza compilando il modulo qui sotto</p>
 
-                <form action="https://api.web3forms.com/submit" method="POST" class="space-y-6 text-left">
-                <!-- Access Key Web3Forms -->
-                <input type="hidden" name="access_key" value="f140a839-b648-47f4-94ac-905480419deb">
-                
-                <!-- Soggetto dell'email che riceverai -->
-                <input type="hidden" name="subject" value="Nuova conferma di partecipazione al Matrimonio">
-            
+            <!-- Form RSVP collegato a Google Fogli -->
+            <form id="rsvpForm" class="space-y-6 text-left">
                 <div>
                     <label class="block text-xs font-medium uppercase tracking-wider text-gray-600 mb-2">Nome e Cognome *</label>
                     <input type="text" name="nome" required placeholder="Mario Rossi" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-[#d4af37] text-sm">
                 </div>
-            
+
                 <div class="grid md:grid-cols-2 gap-6">
                     <div>
                         <label class="block text-xs font-medium uppercase tracking-wider text-gray-600 mb-2">Partecipazione *</label>
@@ -143,18 +138,48 @@
                         <input type="number" name="numero_ospiti" min="1" max="10" value="1" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-[#d4af37] text-sm">
                     </div>
                 </div>
-            
+
                 <div>
                     <label class="block text-xs font-medium uppercase tracking-wider text-gray-600 mb-2">Intolleranze / Allergie / Menu Speciali</label>
                     <textarea name="note_alimentari" rows="3" placeholder="Es. 1 Vegetariano, 1 Celiaco, menu bambini..." class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-[#d4af37] text-sm"></textarea>
                 </div>
-            
-                <button type="submit" class="w-full bg-[#2c3e35] text-white py-4 rounded-xl text-xs uppercase tracking-widest font-semibold hover:bg-[#d4af37] transition duration-300 shadow-md">
+
+                <button type="submit" id="submitBtn" class="w-full bg-[#2c3e35] text-white py-4 rounded-xl text-xs uppercase tracking-widest font-semibold hover:bg-[#d4af37] transition duration-300 shadow-md">
                     Invia Conferma
                 </button>
+                <p id="formStatus" class="text-center text-sm font-medium hidden"></p>
             </form>
         </div>
     </section>
+
+    <script>
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbzATnHOrdt6InwRQaNTC1w7kcowDtEyZLMjGYhseGqbRAzZjr7FBnOeP-AKXg4v3kgN/exec';
+        const form = document.getElementById('rsvpForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const formStatus = document.getElementById('formStatus');
+
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+            submitBtn.disabled = true;
+            submitBtn.innerText = 'Invio in corso...';
+
+            fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+                .then(response => {
+                    formStatus.innerText = 'Grazie! La tua conferma è stata inviata con successo.';
+                    formStatus.className = 'text-center text-sm font-medium text-emerald-600 mt-4';
+                    formStatus.classList.remove('hidden');
+                    submitBtn.innerText = 'Inviato!';
+                    form.reset();
+                })
+                .catch(error => {
+                    formStatus.innerText = 'Si è verificato un errore. Riprova più tardi.';
+                    formStatus.className = 'text-center text-sm font-medium text-red-600 mt-4';
+                    formStatus.classList.remove('hidden');
+                    submitBtn.disabled = false;
+                    submitBtn.innerText = 'Invia Conferma';
+                });
+        });
+    </script>
 
     <!-- LISTA NOZZE / IBAN -->
     <section id="iban" class="py-20 bg-[#f4efe6] px-4 text-center">
