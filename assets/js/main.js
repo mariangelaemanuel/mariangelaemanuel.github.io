@@ -1,5 +1,5 @@
 // Imposta qui la data del matrimonio (Formato: YYYY-MM-DDTHH:MM:SS)
-const weddingDate = new Date("2027-06-20T11:00:00").getTime();
+const weddingDate = new Date("2027-04-30T12:00:00").getTime();
 
 function updateCountdown() {
     const now = new Date().getTime();
@@ -24,7 +24,6 @@ function updateCountdown() {
 setInterval(updateCountdown, 1000);
 updateCountdown();
 
-// Funzione per copiare l'IBAN negli appunti
 function copyIban() {
     const ibanText = document.getElementById('ibanText').innerText.trim();
     const btnText = document.getElementById('copyBtnText');
