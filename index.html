@@ -14,6 +14,23 @@
 
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        .modal-backdrop {
+            transition: opacity 0.3s ease-in-out;
+        }
+        .modal-card {
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease-in-out;
+        }
+        .modal-open .modal-backdrop {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .modal-open .modal-card {
+            transform: scale(1);
+            opacity: 1;
+        }
+    </style>
 </head>
 <body class="bg-[#F9F8F3] text-[#3B2F2F] font-sans antialiased selection:bg-[#B0C4DE] selection:text-white">
 
@@ -71,7 +88,7 @@
         Siamo felici di invitarvi a condividere con noi il giorno più bello.
     </p>
     <p class="text-[#7A5C43]/80 leading-relaxed text-sm md:text-base max-w-2xl mx-auto">
-        Di seguito trovi i punti chiave della giornata e gli orari indicativi di ogni momento. Clicca sulle singole tappe per scoprirne i dettagli!
+        Di seguito trovi i punti chiave della giornata e gli orari indicativi di ogni momento. Clicca sulle tappe per aprire la scheda di dettaglio!
     </p>
 </section>
 
@@ -85,62 +102,41 @@
         <div class="relative wrap overflow-hidden p-2 md:p-6 h-full text-left">
             <div class="border-2-2 absolute border-opacity-30 border-[#B0C4DE] h-full border-dashed left-6 md:left-1/2 -ml-0.5"></div>
 
-            <div class="mb-10 flex justify-between items-center w-full right-timeline relative">
+            <!-- TAPPA 1: Arrivo & Rito Civile -->
+            <div class="mb-12 flex justify-between items-center w-full right-timeline relative group cursor-pointer" onclick="openModal('modal-rito')">
                 <div class="order-1 w-full pl-14 md:pl-0 md:w-5/12 md:text-right">
-                    <span class="inline-block px-3 py-1 bg-[#B0C4DE]/30 text-[#3B2F2F] text-xs font-semibold rounded-full uppercase tracking-wider mb-2">Ore 10:30</span>
-                    <h3 class="font-serif text-2xl text-[#3B2F2F] font-semibold">Partenza Bus Navetta</h3>
-                    <p class="text-[#7A5C43] text-xs mt-1">Punto di raduno ospiti</p>
-                </div>
-                <button onclick="openModal('modal-bus')" class="z-20 flex items-center justify-center order-1 bg-[#B0C4DE] hover:bg-[#7A5C43] text-[#3B2F2F] hover:text-white shadow-md w-12 h-12 rounded-full border-4 border-white transition duration-300 absolute left-0 md:left-1/2 -ml-6 cursor-pointer">
-                    <i class="fa-solid fa-bus text-base"></i>
-                </button>
-                <div class="order-1 w-full pl-14 md:pl-0 md:w-5/12 hidden md:block"></div>
-            </div>
-
-            <div class="mb-10 flex justify-between items-center w-full right-timeline relative">
-                <div class="order-1 w-full pl-14 md:pl-0 md:w-5/12 hidden md:block"></div>
-                <button onclick="openModal('modal-rito')" class="z-20 flex items-center justify-center order-1 bg-[#B0C4DE] hover:bg-[#7A5C43] text-[#3B2F2F] hover:text-white shadow-md w-12 h-12 rounded-full border-4 border-white transition duration-300 absolute left-0 md:left-1/2 -ml-6 cursor-pointer">
-                    <i class="fa-solid fa-hands-holding-child text-base"></i>
-                </button>
-                <div class="order-1 w-full pl-14 md:pl-0 md:w-5/12">
                     <span class="inline-block px-3 py-1 bg-[#B0C4DE]/30 text-[#3B2F2F] text-xs font-semibold rounded-full uppercase tracking-wider mb-2">Ore 12:00</span>
-                    <h3 class="font-serif text-2xl text-[#3B2F2F] font-semibold">Arrivo &amp; Rito Civile</h3>
+                    <h3 class="font-serif text-2xl text-[#3B2F2F] font-semibold group-hover:text-[#7A5C43] transition">Arrivo &amp; Rito Civile</h3>
                     <p class="text-[#7A5C43] text-xs mt-1">Celebrazione nei Giardini di Villa Ciardi</p>
                 </div>
+                <button class="z-20 flex items-center justify-center order-1 bg-[#B0C4DE] group-hover:bg-[#7A5C43] text-[#3B2F2F] group-hover:text-white shadow-md w-12 h-12 rounded-full border-4 border-white transition duration-300 absolute left-0 md:left-1/2 -ml-6 group-hover:scale-110">
+                    <i class="fa-solid fa-hands-holding-child text-base"></i>
+                </button>
+                <div class="order-1 w-full pl-14 md:pl-0 md:w-5/12 hidden md:block"></div>
             </div>
 
-            <div class="mb-10 flex justify-between items-center w-full right-timeline relative">
-                <div class="order-1 w-full pl-14 md:pl-0 md:w-5/12 md:text-right">
-                    <span class="inline-block px-3 py-1 bg-[#B0C4DE]/30 text-[#3B2F2F] text-xs font-semibold rounded-full uppercase tracking-wider mb-2">Ore 13:30</span>
-                    <h3 class="font-serif text-2xl text-[#3B2F2F] font-semibold">Aperitivo &amp; Pranzo</h3>
-                    <p class="text-[#7A5C43] text-xs mt-1">Buffet e ricevimento nelle sale nobili</p>
-                </div>
-                <button onclick="openModal('modal-pranzo')" class="z-20 flex items-center justify-center order-1 bg-[#B0C4DE] hover:bg-[#7A5C43] text-[#3B2F2F] hover:text-white shadow-md w-12 h-12 rounded-full border-4 border-white transition duration-300 absolute left-0 md:left-1/2 -ml-6 cursor-pointer">
+            <!-- TAPPA 2: Aperitivo & Ricevimento -->
+            <div class="mb-12 flex justify-between items-center w-full right-timeline relative group cursor-pointer" onclick="openModal('modal-pranzo')">
+                <div class="order-1 w-full pl-14 md:pl-0 md:w-5/12 hidden md:block"></div>
+                <button class="z-20 flex items-center justify-center order-1 bg-[#B0C4DE] group-hover:bg-[#7A5C43] text-[#3B2F2F] group-hover:text-white shadow-md w-12 h-12 rounded-full border-4 border-white transition duration-300 absolute left-0 md:left-1/2 -ml-6 group-hover:scale-110">
                     <i class="fa-solid fa-wine-glass text-base"></i>
                 </button>
-                <div class="order-1 w-full pl-14 md:pl-0 md:w-5/12 hidden md:block"></div>
-            </div>
-
-            <div class="mb-10 flex justify-between items-center w-full right-timeline relative">
-                <div class="order-1 w-full pl-14 md:pl-0 md:w-5/12 hidden md:block"></div>
-                <button onclick="openModal('modal-torta')" class="z-20 flex items-center justify-center order-1 bg-[#B0C4DE] hover:bg-[#7A5C43] text-[#3B2F2F] hover:text-white shadow-md w-12 h-12 rounded-full border-4 border-white transition duration-300 absolute left-0 md:left-1/2 -ml-6 cursor-pointer">
-                    <i class="fa-solid fa-cake-candles text-base"></i>
-                </button>
                 <div class="order-1 w-full pl-14 md:pl-0 md:w-5/12">
-                    <span class="inline-block px-3 py-1 bg-[#B0C4DE]/30 text-[#3B2F2F] text-xs font-semibold rounded-full uppercase tracking-wider mb-2">Ore 19:30</span>
-                    <h3 class="font-serif text-2xl text-[#3B2F2F] font-semibold">Taglio della Torta &amp; Party</h3>
-                    <p class="text-[#7A5C43] text-xs mt-1">Accoglienza ospiti serali, torta e festeggiamenti</p>
+                    <span class="inline-block px-3 py-1 bg-[#B0C4DE]/30 text-[#3B2F2F] text-xs font-semibold rounded-full uppercase tracking-wider mb-2">Ore 13:30</span>
+                    <h3 class="font-serif text-2xl text-[#3B2F2F] font-semibold group-hover:text-[#7A5C43] transition">Aperitivo &amp; Ricevimento</h3>
+                    <p class="text-[#7A5C43] text-xs mt-1">Buffet e pranzo nelle sale nobili</p>
                 </div>
             </div>
 
-            <div class="mb-6 flex justify-between items-center w-full right-timeline relative">
+            <!-- TAPPA 3: Taglio della Torta & Party -->
+            <div class="mb-6 flex justify-between items-center w-full right-timeline relative group cursor-pointer" onclick="openModal('modal-torta')">
                 <div class="order-1 w-full pl-14 md:pl-0 md:w-5/12 md:text-right">
-                    <span class="inline-block px-3 py-1 bg-[#B0C4DE]/30 text-[#3B2F2F] text-xs font-semibold rounded-full uppercase tracking-wider mb-2">Ore 23:00</span>
-                    <h3 class="font-serif text-2xl text-[#3B2F2F] font-semibold">Rientro Navetta</h3>
-                    <p class="text-[#7A5C43] text-xs mt-1">Partenza bus per il rientro</p>
+                    <span class="inline-block px-3 py-1 bg-[#B0C4DE]/30 text-[#3B2F2F] text-xs font-semibold rounded-full uppercase tracking-wider mb-2">Ore 19:30</span>
+                    <h3 class="font-serif text-2xl text-[#3B2F2F] font-semibold group-hover:text-[#7A5C43] transition">Taglio Torta &amp; Party</h3>
+                    <p class="text-[#7A5C43] text-xs mt-1">Ospiti serali, torta nuziale e festeggiamenti</p>
                 </div>
-                <button onclick="openModal('modal-rientro')" class="z-20 flex items-center justify-center order-1 bg-[#B0C4DE] hover:bg-[#7A5C43] text-[#3B2F2F] hover:text-white shadow-md w-12 h-12 rounded-full border-4 border-white transition duration-300 absolute left-0 md:left-1/2 -ml-6 cursor-pointer">
-                    <i class="fa-solid fa-bus-simple text-base"></i>
+                <button class="z-20 flex items-center justify-center order-1 bg-[#B0C4DE] group-hover:bg-[#7A5C43] text-[#3B2F2F] group-hover:text-white shadow-md w-12 h-12 rounded-full border-4 border-white transition duration-300 absolute left-0 md:left-1/2 -ml-6 group-hover:scale-110">
+                    <i class="fa-solid fa-cake-candles text-base"></i>
                 </button>
                 <div class="order-1 w-full pl-14 md:pl-0 md:w-5/12 hidden md:block"></div>
             </div>
@@ -149,54 +145,41 @@
     </div>
 </section>
 
-<!-- POPUP MODALI TAPPE -->
-<div id="modal-bus" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-white rounded-3xl max-w-md w-full overflow-hidden shadow-2xl transform transition-all p-6 text-left relative border border-[#B0C4DE]">
-        <button onclick="closeModal('modal-bus')" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600"><i class="fa-solid fa-xmark text-xl"></i></button>
-        <span class="text-xs uppercase tracking-widest text-[#B0C4DE] font-bold block mb-1">Ore 10:30</span>
-        <h3 class="font-serif text-2xl text-[#3B2F2F] font-bold mb-3">Fermata &amp; Partenza Navetta</h3>
-        <p class="text-[#7A5C43] text-sm leading-relaxed mb-4">Servizio navetta a disposizione degli ospiti. Vi preghiamo di arrivare con 15 minuti di anticipo.</p>
-        <p class="text-xs text-gray-400"><i class="fa-solid fa-location-dot mr-1 text-[#B0C4DE]"></i> Ritrovo: Piazza Centrale (Altamura)</p>
-    </div>
-</div>
+<!-- POPUP MODALI CON TRANSIZIONE ZOOM -->
 
-<div id="modal-rito" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-white rounded-3xl max-w-md w-full overflow-hidden shadow-2xl transform transition-all p-6 text-left relative border border-[#B0C4DE]">
-        <button onclick="closeModal('modal-rito')" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600"><i class="fa-solid fa-xmark text-xl"></i></button>
-        <img src="assets/img/villaciardi.jpg" alt="Villa Ciardi" class="w-full h-48 object-cover rounded-2xl mb-4">
+<div id="modal-rito" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
+    <div class="modal-backdrop fixed inset-0 bg-black/60 backdrop-blur-sm opacity-0 pointer-events-none" onclick="closeModal('modal-rito')"></div>
+    <div class="modal-card bg-white rounded-3xl max-w-md w-full overflow-hidden shadow-2xl relative border border-[#B0C4DE] z-10 scale-95 opacity-0 p-6 text-left">
+        <button onclick="closeModal('modal-rito')" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition"><i class="fa-solid fa-xmark text-xl"></i></button>
+        <div class="overflow-hidden rounded-2xl mb-4 h-48">
+            <img src="assets/img/villaciardi.jpg" alt="Villa Ciardi" class="w-full h-full object-cover">
+        </div>
         <span class="text-xs uppercase tracking-widest text-[#B0C4DE] font-bold block mb-1">Ore 12:00</span>
         <h3 class="font-serif text-2xl text-[#3B2F2F] font-bold mb-2">Arrivo &amp; Rito Civile</h3>
-        <p class="text-[#7A5C43] text-sm leading-relaxed mb-4">Accoglienza nei giardini di Villa Ciardi e celebrezione del rito civile all'aperto.</p>
-        <a href="https://maps.google.com/?q=Villa+Ciardi+Bisceglie" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-[#3B2F2F] font-bold hover:text-[#B0C4DE]">
+        <p class="text-[#7A5C43] text-sm leading-relaxed mb-4">Accoglienza nei giardini storici di Villa Ciardi e celebrazione del rito civile all'aperto.</p>
+        <a href="https://maps.google.com/?q=Villa+Ciardi+Bisceglie" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-[#3B2F2F] font-bold hover:text-[#B0C4DE] transition">
             <i class="fa-solid fa-map-location-dot"></i> Apri su Google Maps
         </a>
     </div>
 </div>
 
-<div id="modal-pranzo" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-white rounded-3xl max-w-md w-full overflow-hidden shadow-2xl transform transition-all p-6 text-left relative border border-[#B0C4DE]">
-        <button onclick="closeModal('modal-pranzo')" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600"><i class="fa-solid fa-xmark text-xl"></i></button>
+<div id="modal-pranzo" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
+    <div class="modal-backdrop fixed inset-0 bg-black/60 backdrop-blur-sm opacity-0 pointer-events-none" onclick="closeModal('modal-pranzo')"></div>
+    <div class="modal-card bg-white rounded-3xl max-w-md w-full overflow-hidden shadow-2xl relative border border-[#B0C4DE] z-10 scale-95 opacity-0 p-6 text-left">
+        <button onclick="closeModal('modal-pranzo')" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition"><i class="fa-solid fa-xmark text-xl"></i></button>
         <span class="text-xs uppercase tracking-widest text-[#B0C4DE] font-bold block mb-1">Ore 13:30</span>
-        <h3 class="font-serif text-2xl text-[#3B2F2F] font-bold mb-3">Aperitivo e Ricevimento</h3>
-        <p class="text-[#7A5C43] text-sm leading-relaxed">Gran buffet d'apertura nell'atrio esterno e pranzo nelle sale della villa.</p>
+        <h3 class="font-serif text-2xl text-[#3B2F2F] font-bold mb-3">Aperitivo &amp; Ricevimento</h3>
+        <p class="text-[#7A5C43] text-sm leading-relaxed mb-4">Gran buffet di benvenuto all'aperto seguita dal pranzo servito nelle sale di Villa Ciardi.</p>
     </div>
 </div>
 
-<div id="modal-torta" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-white rounded-3xl max-w-md w-full overflow-hidden shadow-2xl transform transition-all p-6 text-left relative border border-[#B0C4DE]">
-        <button onclick="closeModal('modal-torta')" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600"><i class="fa-solid fa-xmark text-xl"></i></button>
+<div id="modal-torta" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
+    <div class="modal-backdrop fixed inset-0 bg-black/60 backdrop-blur-sm opacity-0 pointer-events-none" onclick="closeModal('modal-torta')"></div>
+    <div class="modal-card bg-white rounded-3xl max-w-md w-full overflow-hidden shadow-2xl relative border border-[#B0C4DE] z-10 scale-95 opacity-0 p-6 text-left">
+        <button onclick="closeModal('modal-torta')" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition"><i class="fa-solid fa-xmark text-xl"></i></button>
         <span class="text-xs uppercase tracking-widest text-[#B0C4DE] font-bold block mb-1">Ore 19:30</span>
         <h3 class="font-serif text-2xl text-[#3B2F2F] font-bold mb-3">Taglio Torta &amp; Party Serale</h3>
-        <p class="text-[#7A5C43] text-sm leading-relaxed mb-3">Accoglienza degli invitati serali, taglio della torta nuziale, open bar e DJ set!</p>
-    </div>
-</div>
-
-<div id="modal-rientro" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-white rounded-3xl max-w-md w-full overflow-hidden shadow-2xl transform transition-all p-6 text-left relative border border-[#B0C4DE]">
-        <button onclick="closeModal('modal-rientro')" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600"><i class="fa-solid fa-xmark text-xl"></i></button>
-        <span class="text-xs uppercase tracking-widest text-[#B0C4DE] font-bold block mb-1">Ore 23:00</span>
-        <h3 class="font-serif text-2xl text-[#3B2F2F] font-bold mb-3">Rientro in Bus</h3>
-        <p class="text-[#7A5C43] text-sm leading-relaxed">Partenza della navetta di ritorno da Villa Ciardi per riportare gli ospiti al punto iniziale.</p>
+        <p class="text-[#7A5C43] text-sm leading-relaxed mb-3">Accoglienza degli invitati serali, taglio della torta nuziale nei giardini, open bar e DJ set fino a tarda notte!</p>
     </div>
 </div>
 
@@ -267,10 +250,19 @@
     });
 
     function openModal(id) {
-        document.getElementById(id).classList.remove('hidden');
+        const modal = document.getElementById(id);
+        modal.classList.remove('hidden');
+        setTimeout(() => {
+            modal.classList.add('modal-open');
+        }, 10);
     }
+
     function closeModal(id) {
-        document.getElementById(id).classList.add('hidden');
+        const modal = document.getElementById(id);
+        modal.classList.remove('modal-open');
+        setTimeout(() => {
+            modal.classList.add('hidden');
+        }, 300);
     }
 </script>
 
